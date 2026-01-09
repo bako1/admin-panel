@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
@@ -26,10 +27,13 @@ const cloudflare =
     : await getCloudflareContext({ async: true })
 
 export default buildConfig({
+  email: resendAdapter({
+    defaultFromAddress: 'abdi@walabu.tech',
+    defaultFromName: 'Reset Password',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
   admin: {
     user: Users.slug,
-    
-   
   },
   collections: [Users, Media, Posts],
   editor: lexicalEditor(),
