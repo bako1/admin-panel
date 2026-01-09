@@ -1,0 +1,82 @@
+.login__card {
+  background: aqua;
+  border-radius: 16px;
+}
+
+.payload__login h1 {
+  color: white;
+}
+
+.payload__btn--style-primary {
+  background: #6366f1;
+}
+
+.login__btn {
+  background-color: green;
+  border-radius: 10px;
+}
+
+.login__brand {
+  display: none;
+}
+.login.template-minimal {
+  background-color: #f0f2f5;
+}
+/* Shared Styles (Applied to both light and dark) */
+.template-minimal__wrap {
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Light Mode (Default) */
+html[data-theme='light'] .template-minimal__wrap {
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  .login__form .btn--style-primary {
+    background-image: linear-gradient(to right, #6366f1, #8b5cf6);
+  }
+}
+html[data-theme='dark'] .login {
+  background-image: linear-gradient(to right, #171f29, #07040c);
+}
+
+html[data-theme='light'] .login {
+  background-image: linear-gradient(to bottom, #6366f1, #8b5cf6);
+}
+
+/* Dark Mode Overrides */
+html[data-theme='dark'] .template-minimal__wrap {
+  background: #1f1f1f; /* A dark gray background */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow for dark mode */
+}
+.login__form .btn--style-primary {
+  border-radius: 4px;
+}
+/*
+.nav {
+  background-color: #7676ef;
+}*/
+
+/* Header Background and Border */
+.app-header {
+  border-bottom: 1px solid var(--theme-elevation-100);
+  background-color: var(--theme-elevation-0);
+}
+
+/* Style the Breadcrumbs (Step Nav) */
+.step-nav a,
+.step-nav__last {
+  font-weight: 600;
+  color: var(--theme-elevation-800);
+}
+
+/* Change the User Gravatar Size/Border */
+.gravatar-account {
+  border: 2px solid var(--theme-primary-500);
+}
+.graphic-icon {
+  display: none;
+}
+.step-nav span:nth-last-child(2) {
+  display: none;
+}
