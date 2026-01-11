@@ -13,7 +13,13 @@ import 'dotenv/config'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Post'
-
+import { Hero } from './collections/Hero'
+import { DishCollection } from './collections/DishCollection'
+import { Moods } from './collections/Moods'
+import { AyahMoodMap } from './collections/AyahMoodMap'
+import { Reflections } from './collections/Reflections'
+import { Hadith } from './collections/Hadith'
+import { Dua } from './collections/Dua'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const realpath = (value: string) => (fs.existsSync(value) ? fs.realpathSync(value) : undefined)
@@ -35,7 +41,18 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media, Posts],
+  collections: [
+    Users,
+    Media,
+    Posts,
+    Hero,
+    DishCollection,
+    Moods,
+    AyahMoodMap,
+    Reflections,
+    Hadith,
+    Dua,
+  ],
   editor: lexicalEditor(),
 
   secret: process.env.PAYLOAD_SECRET || 'ds',

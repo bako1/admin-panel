@@ -70,6 +70,13 @@ export interface Config {
     users: User;
     media: Media;
     posts: Post;
+    hero: Hero;
+    dishes: Dish;
+    moods: Mood;
+    'ayah-mood-map': AyahMoodMap;
+    reflections: Reflection;
+    hadith: Hadith;
+    dua: Dua;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +87,13 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    dishes: DishesSelect<false> | DishesSelect<true>;
+    moods: MoodsSelect<false> | MoodsSelect<true>;
+    'ayah-mood-map': AyahMoodMapSelect<false> | AyahMoodMapSelect<true>;
+    reflections: ReflectionsSelect<false> | ReflectionsSelect<true>;
+    hadith: HadithSelect<false> | HadithSelect<true>;
+    dua: DuaSelect<false> | DuaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -186,6 +200,124 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  name?: string | null;
+  tagline?: string | null;
+  image?: (number | null) | Media;
+  primaryCta?: string | null;
+  primaryHref?: string | null;
+  secondaryCta?: string | null;
+  secondaryHref?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dishes".
+ */
+export interface Dish {
+  id: number;
+  name: string;
+  description?: string | null;
+  price: string;
+  image?: (number | null) | Media;
+  badges?: ('Vegan' | 'Vegetarian' | 'Halal' | 'Gluten-free' | 'Spicy')[] | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "moods".
+ */
+export interface Mood {
+  id: number;
+  slug: string;
+  displayName: string;
+  description?: string | null;
+  order?: number | null;
+  isActive?: boolean | null;
+  redirectMood?: (number | null) | Mood;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ayah-mood-map".
+ */
+export interface AyahMoodMap {
+  id: number;
+  mood: number | Mood;
+  surahId: number;
+  ayahId: number;
+  minIntensity: number;
+  maxIntensity: number;
+  priority?: number | null;
+  cooldownDays?: number | null;
+  /**
+   * Why this ayah fits this mood (editor only)
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reflections".
+ */
+export interface Reflection {
+  id: number;
+  ayahMoodMap: number | AyahMoodMap;
+  language: 'en' | 'ar' | 'other';
+  text: string;
+  variant?: ('A' | 'B' | 'C') | null;
+  tone?: ('comforting' | 'strengthening' | 'hopeful') | null;
+  maxIntensity?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hadith".
+ */
+export interface Hadith {
+  id: number;
+  source: string;
+  reference: string;
+  text: string;
+  language: 'en' | 'ar';
+  moods?: (number | Mood)[] | null;
+  minIntensity?: number | null;
+  maxIntensity?: number | null;
+  authenticity?: ('sahih' | 'hasan' | 'daif') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dua".
+ */
+export interface Dua {
+  id: number;
+  arabic: string;
+  translations?:
+    | {
+        language?: string | null;
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  moods?: (number | Mood)[] | null;
+  tone?: ('short' | 'deep' | 'emergency') | null;
+  maxIntensity?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -219,6 +351,34 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'hero';
+        value: number | Hero;
+      } | null)
+    | ({
+        relationTo: 'dishes';
+        value: number | Dish;
+      } | null)
+    | ({
+        relationTo: 'moods';
+        value: number | Mood;
+      } | null)
+    | ({
+        relationTo: 'ayah-mood-map';
+        value: number | AyahMoodMap;
+      } | null)
+    | ({
+        relationTo: 'reflections';
+        value: number | Reflection;
+      } | null)
+    | ({
+        relationTo: 'hadith';
+        value: number | Hadith;
+      } | null)
+    | ({
+        relationTo: 'dua';
+        value: number | Dua;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -307,6 +467,114 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  name?: T;
+  tagline?: T;
+  image?: T;
+  primaryCta?: T;
+  primaryHref?: T;
+  secondaryCta?: T;
+  secondaryHref?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dishes_select".
+ */
+export interface DishesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  price?: T;
+  image?: T;
+  badges?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "moods_select".
+ */
+export interface MoodsSelect<T extends boolean = true> {
+  slug?: T;
+  displayName?: T;
+  description?: T;
+  order?: T;
+  isActive?: T;
+  redirectMood?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ayah-mood-map_select".
+ */
+export interface AyahMoodMapSelect<T extends boolean = true> {
+  mood?: T;
+  surahId?: T;
+  ayahId?: T;
+  minIntensity?: T;
+  maxIntensity?: T;
+  priority?: T;
+  cooldownDays?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reflections_select".
+ */
+export interface ReflectionsSelect<T extends boolean = true> {
+  ayahMoodMap?: T;
+  language?: T;
+  text?: T;
+  variant?: T;
+  tone?: T;
+  maxIntensity?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hadith_select".
+ */
+export interface HadithSelect<T extends boolean = true> {
+  source?: T;
+  reference?: T;
+  text?: T;
+  language?: T;
+  moods?: T;
+  minIntensity?: T;
+  maxIntensity?: T;
+  authenticity?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dua_select".
+ */
+export interface DuaSelect<T extends boolean = true> {
+  arabic?: T;
+  translations?:
+    | T
+    | {
+        language?: T;
+        text?: T;
+        id?: T;
+      };
+  moods?: T;
+  tone?: T;
+  maxIntensity?: T;
   updatedAt?: T;
   createdAt?: T;
 }
